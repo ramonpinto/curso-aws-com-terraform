@@ -1,9 +1,10 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "sa-east-1"
+  profile = "lab"
 }
 
 resource "aws_s3_bucket" "b" {
-  bucket = "my-tf-test-bucket-12312312312"
+  bucket = "curso-terraform2020"
   acl    = "private"
 
   tags = {
