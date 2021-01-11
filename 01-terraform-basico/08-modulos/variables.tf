@@ -1,4 +1,8 @@
 variable "region" {
-  default     = "us-east-1"
+  default     = "sa-east-1"
   description = "Main region"
+}
+
+variable "profile" {
+  default = "lab"
 }

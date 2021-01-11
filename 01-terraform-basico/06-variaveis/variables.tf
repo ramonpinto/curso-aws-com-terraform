@@ -1,5 +1,5 @@
 variable "region" {
-  default     = "us-east-1"
+  default     = "sa-east-1"
   description = "Main region"
 }
 
@@ -12,10 +12,12 @@ variable "secret_key" {
 }
 
 variable "ami" {
-  default = "ami-035be7bafff33b6b6"
+  default = "ami-022082b7f1da62478"
 }
 
-variable "type" {}
+variable "instance-type" {
+  
+}
 
 variable "ips" {
   type    = "list"
@@ -24,9 +26,13 @@ variable "ips" {
 
 variable "tags" {
   type = "map"
-
   default = {
     "Name" = "Nodejs"
     "Env"  = "Dev"
   }
+}
+
+variable "profile" {
+  default = "lab"
+  
 }

@@ -1,5 +1,6 @@
 provider "aws" {
-  region = "${var.region}"
+  region  = var.region
+  profile = var.profile
 }
 
 resource "random_id" "bucket" {
@@ -13,7 +14,7 @@ resource "random_id" "bucket_2" {
 module "bucket" {
   source = "./s3"
 
-  name       = "my-bucket-${random_id.bucket.hex}"
+  name       = "my-bucket-ramon-${random_id.bucket.hex}"
   versioning = true
 
   tags = {
@@ -28,7 +29,7 @@ module "bucket" {
 module "bucket-2" {
   source = "./s3"
 
-  name = "my-bucket-${random_id.bucket_2.hex}"
+  name = "my-bucket-ramon-${random_id.bucket_2.hex}"
 }
 
 resource "aws_s3_bucket" "meu_bucket" {
