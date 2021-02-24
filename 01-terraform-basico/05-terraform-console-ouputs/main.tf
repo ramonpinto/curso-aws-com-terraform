@@ -21,14 +21,14 @@ resource "aws_s3_bucket_object" "object" {
 }
 
 output "bucket" {
-  value = "${aws_s3_bucket.b.id}"
+  value = aws_s3_bucket.b.id
 }
 
 output "etag" {
-  value = "${aws_s3_bucket_object.object.etag}"
+  value = aws_s3_bucket_object.object.etag
 }
 
 output "bucket-name" {
-  value = "${aws_s3_bucket_object.object.bucket}"
+  value = aws_s3_bucket_object.object.bucket
 }
 

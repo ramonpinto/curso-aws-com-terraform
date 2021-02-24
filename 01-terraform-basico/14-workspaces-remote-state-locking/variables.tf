@@ -1,18 +1,18 @@
 variable "region" {
-  default = "us-east-1"
+  default = "sa-east-1"
 }
 
 variable "ami" {
-  type = "map"
+  type = map(string)
 
   default = {
-    "dev"  = "ami-035be7bafff33b6b6"
-    "prod" = "ami-0080e4c5bc078760e"
+    "dev"  = "ami-079b1541b6dc958ca"
+    "prod" = "ami-079b1541b6dc958ca"
   }
 }
 
 variable "type" {
-  type = "map"
+  type = map(string)
 
   default = {
     "dev"  = "t2.micro"

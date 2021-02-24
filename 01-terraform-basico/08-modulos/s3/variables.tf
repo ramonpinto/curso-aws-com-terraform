@@ -9,7 +9,7 @@ variable "versioning" {
 }
 
 variable "tags" {
-  type    = "map"
+  type    = map
   default = {}
 }
 
@@ -23,4 +23,8 @@ variable "object_source" {
 
 variable "create_object" {
   default = false
+}
+
+variable "profile" {
+  default = "lab"
 }

@@ -1,6 +1,6 @@
 provider "aws" {
-  region = "${var.region}"
-  profile = "${var.profile}"
+  region  = var.region
+  profile = "lab"
 }
 
 resource "random_id" "bucket" {
@@ -8,12 +8,12 @@ resource "random_id" "bucket" {
 }
 # provide para gerar strings inteiros randomicamente (random_id)
 resource "random_id" "bucket_2" {
-  byte_length = 4
+  byte_length = 8
 }
 
 module "bucket" {
   source = "./s3"
-                # Gerando nome do bucket com caracteres hexadecimal
+  # Gerando nome do bucket com caracteres hexadecimal
   name       = "my-bucket-ramon-${random_id.bucket.hex}"
   versioning = true
 
@@ -28,6 +28,5 @@ module "bucket" {
 
 module "bucket-2" {
   source = "./s3"
-
-  name = "my-bucket-ramon-${random_id.bucket_2.hex}"
+  name   = "my-bucket-ramon-${random_id.bucket_2.hex}"
 }

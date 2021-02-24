@@ -1,1 +1,2 @@
 i-027358c52ad554ffd:3.87.73.34
+aws_instance.web.id:aws_instance.web.public_ip

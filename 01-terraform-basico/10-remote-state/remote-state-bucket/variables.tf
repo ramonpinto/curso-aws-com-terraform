@@ -3,9 +3,13 @@ variable "env" {
 }
 
 variable "region" {
-  default = "us-east-1"
+  default = "sa-east-1"
 }
 
 variable "bucket_name" {
-  default = "curso-aws-terraform-remote-state"
+  default = "curso-aws-terraform-remote-state-ramon"
+}
+
+variable "profile" {
+  default = "lab"
 }

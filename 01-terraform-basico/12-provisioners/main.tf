@@ -1,45 +1,49 @@
 provider "aws" {
-  region = "${var.region}"
+  region  = var.region
+  profile = "lab"
 }
 
-terraform {
+terraform { # Salvando confirações do state no bucket s3
   backend "s3" {
-    bucket = "curso-aws-terraform-remote-state-dev"
-    key    = "ec2/ec2.tfstate"
-    region = "us-east-1"
+    profile = "lab"
+    bucket  = "curso-aws-terraform-remote-state-ramon-dev"
+    key     = "ec2/ec2.tfstate"
+    region  = "sa-east-1"
   }
 }
 
 locals {
   conn_type    = "ssh"
-  conn_user    = "ec2-user"
-  conn_timeout = "1m"
-
-  # conn_key     = "${tls_private_key.pkey.private_key_pem}"
-
-  conn_key = "${file("~/Downloads/Firefox/cleber.pem")}"
+  conn_user    = "ubuntu"
+  conn_timeout = "10m"
+  conn_key     = file("~/Documentos/Chaves_aws/ramon-araujo.pem")
 }
 
-resource "aws_instance" "web" {
-  ami           = "${var.ami}"
-  instance_type = "${var.instance_type}"
-  key_name      = "cleber"
+resource "aws_instance" "web" { # Criando ec2
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = "ramon-araujo"
+
+  tags = {
+    "Name" = "Ubuntu-ramon-teste"
+  }
 
   provisioner "file" {
     source      = "2019-01-26.log"
     destination = "/tmp/file.log"
 
     connection {
-      type        = "${local.conn_type}"
-      user        = "${local.conn_user}"
-      timeout     = "${local.conn_timeout}"
-      private_key = "${local.conn_key}"
+      host        = self.public_ip
+      type        = local.conn_type
+      user        = local.conn_user
+      timeout     = local.conn_timeout
+      private_key = local.conn_key
     }
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sleep 20",
+      "sleep 25",
       "echo \"[UPDATING THE SYSTEM]\"",
       "sudo yum update -y",
       "echo \"[INSTALLING HTTPD]\"",
@@ -48,14 +52,15 @@ resource "aws_instance" "web" {
       "sudo service httpd start",
       "sudo chkconfig httpd on",
       "echo \"[FINISHING]\"",
-      "sleep 20",
+      "sleep 25",
     ]
 
     connection {
-      type        = "${local.conn_type}"
-      user        = "${local.conn_user}"
-      timeout     = "${local.conn_timeout}"
-      private_key = "${local.conn_key}"
+      host        = self.public_ip
+      type        = local.conn_type
+      user        = local.conn_user
+      timeout     = local.conn_timeout
+      private_key = local.conn_key
     }
   }
 }
@@ -72,6 +77,6 @@ resource "tls_private_key" "pkey" {
 }
 
 resource "aws_key_pair" "keypair" {
-  key_name   = "cgasparoto-${var.env}"
-  public_key = "${tls_private_key.pkey.public_key_openssh}"
+  key_name   = "ramon-araujo-${var.env}"
+  public_key = tls_private_key.pkey.public_key_openssh
 }
